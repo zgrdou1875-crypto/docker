@@ -1,0 +1,21 @@
+name: Sync 3x-ui Image
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  sync-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }} 
+
+      - name: Sync from MHSanaei to My Registry
+        run: |
+          docker pull ghcr.io/mhsanaei/3x-ui:latest
+          docker tag ghcr.io/mhsanaei/3x-ui:latest ghcr.io/${{ github.repository_owner }}/panel:latest
+          docker push ghcr.io/${{ github.repository_owner }}/panel:latest
