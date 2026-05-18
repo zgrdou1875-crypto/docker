@@ -17,8 +17,8 @@ jobs:
       - name: Sync from MHSanaei to My Registry
         run: |
 
-          docker pull ghcr.io/mhsanaei/3x-ui:latest
+          docker pull ghcr.io/mhsanaei/3x-ui:v2.9.4
           
-          docker tag ghcr.io/mhsanaei/3x-ui:latest ghcr.io/${{ github.repository_owner }}/3x-ui:latest
+          docker tag ghcr.io/mhsanaei/3x-ui:latest ghcr.io/${{ github.repository_owner }}/panel:v2.9.4
           
-          docker push ghcr.io/${{ github.repository_owner }}/3x-ui:latest
+          docker push ghcr.io/${{ github.repository_owner }}/penal:v2.9.4
