@@ -26,8 +26,6 @@ jobs:
           # 1. 将你的用户名转换为符合 Docker 规范的小写字母
           IMAGE_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           
-          # 2. 核心：使用 buildx imagetools 直接在云端进行多架构完整复制（克隆）
-          # 这会把 amd64, arm64, arm/v7 等所有架构打包成一个“全家桶”塞进你的仓库
           docker buildx imagetools create \
             --tag ghcr.io/${IMAGE_OWNER}/panel:2.9.4 \
             --tag ghcr.io/${IMAGE_OWNER}/panel:v2.9.4 \
