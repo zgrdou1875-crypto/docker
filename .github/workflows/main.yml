@@ -27,6 +27,6 @@ jobs:
           IMAGE_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           
           docker buildx imagetools create \
-            --tag ghcr.io/${IMAGE_OWNER}/panel:2.9.4 \
-            --tag ghcr.io/${IMAGE_OWNER}/panel:v2.9.4 \
-            ghcr.io/mhsanaei/3x-ui:v2.9.4
+            --tag ghcr.io/${IMAGE_OWNER}/panel:2.9.3 \
+            --tag ghcr.io/${IMAGE_OWNER}/panel:v2.9.3 \
+            ghcr.io/mhsanaei/3x-ui:v2.9.3
