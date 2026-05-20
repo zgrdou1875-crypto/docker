@@ -1,12 +1,19 @@
-name: Sync 3x-ui Image
+name: Multi-Arch Sync 3x-ui Image
 
 on:
-  workflow_dispatch: # 允许你在网页端手动点击按钮触发
+  workflow_dispatch: # 手动触发
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   sync-image:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
@@ -14,11 +21,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Sync from MHSanaei to My Registry
+      - name: Sync Multi-Arch Image
         run: |
-
-          docker pull ghcr.io/mhsanaei/3x-ui:v2.9.3
+          # 1. 将你的用户名转换为符合 Docker 规范的小写字母
+          IMAGE_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           
-          docker tag ghcr.io/mhsanaei/3x-ui:v2.9.3 ghcr.io/${{ github.repository_owner }}/panel:v2.9.3
-          
-          docker push ghcr.io/${{ github.repository_owner }}/panel:v2.9.3
+          # 2. 核心：使用 buildx imagetools 直接在云端进行多架构完整复制（克隆）
+          # 这会把 amd64, arm64, arm/v7 等所有架构打包成一个“全家桶”塞进你的仓库
+          docker buildx imagetools create \
+            --tag ghcr.io/${IMAGE_OWNER}/panel:latest \
+            --tag ghcr.io/${IMAGE_OWNER}/panel:v3.0.2 \
+            ghcr.io/mhsanaei/3x-ui:latest
