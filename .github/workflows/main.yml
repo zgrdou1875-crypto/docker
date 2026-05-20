@@ -29,6 +29,6 @@ jobs:
           # 2. 核心：使用 buildx imagetools 直接在云端进行多架构完整复制（克隆）
           # 这会把 amd64, arm64, arm/v7 等所有架构打包成一个“全家桶”塞进你的仓库
           docker buildx imagetools create \
-            --tag ghcr.io/${IMAGE_OWNER}/panel:latest \
-            --tag ghcr.io/${IMAGE_OWNER}/panel:v3.0.2 \
-            ghcr.io/mhsanaei/3x-ui:latest
+            --tag ghcr.io/${IMAGE_OWNER}/panel:v2.9.4 \
+            --tag ghcr.io/${IMAGE_OWNER}/panel:2.9.4 \
+            ghcr.io/mhsanaei/3x-ui:v2.9.4
